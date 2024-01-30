@@ -81,52 +81,20 @@ router.get('/api/user-data', async (req, res) => {
     }
 });
 
-// router.get('/api/check-session', (req, res) => {
-//     if (req.session.userId) {
-//         console.log('user is authenticated')
-//         res.json({ isLoggedIn: true, userId: req.session.userId })
-//     } else {
-//         console.log(
-//             'session', req.session.userId)
+router.get('/api/check-session', (req, res) => {
+    if (req.session.userId) {
+        console.log('user is authenticated')
+        res.json({ isLoggedIn: true, userId: req.session.userId })
+    } else {
+        console.log(
+            'session', req.session.userId)
 
-//         res.json({ isLoggedIn: false })
-//     }
-// })
-
-// router.get('/api/check-session', (req, res) => {
-//     // Log the entire session object for debugging purposes
-//     console.log('Session data:', req.session);
-
-//     if (req.session.userId) {
-//         console.log('User is authenticated. UserID:', req.session.userId);
-//         res.json({ isLoggedIn: true, userId: req.session.userId });
-//     } else {
-//         console.log('User is not authenticated. Session:', req.session);
-//         res.json({ isLoggedIn: false });
-//     }
-// });
-
-router.get('/api/check-session', async (req, res) => {
-    console.log(req.session)
-    try {
-        const sessionId = req.cookies['session_id']; // or however you've named the cookie
-        if (!sessionId) {
-            return res.json({ isLoggedIn: false });
-        }
-
-        const userSession = await session.findOne({ _id: sessionId });
-        if (userSession) {
-            console.log('User is authenticated. UserID:', userSession.userId);
-            res.json({ isLoggedIn: true, userId: userSession.userId });
-        } else {
-            console.log('User is not authenticated. Session:', sessionId);
-            res.json({ isLoggedIn: false });
-        }
-    } catch (error) {
-        console.error('Error checking user session:', error);
-        res.status(500).send('Internal Server Error');
+        res.json({ isLoggedIn: false })
     }
-});
+})
+
+
+
 
 router.post('/api/logout', (req, res) => {
     if (req.session) {
