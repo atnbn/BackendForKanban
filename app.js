@@ -22,7 +22,7 @@ const secret_Key = process.env.SECRET_KEY;
 const corsOptions = {
     origin: ['http://localhost:4200', 'https://kanban-azure-kappa.vercel.app'],
     credentials: true,
-
+    exposedHeader: ['Set-Cookie'],
 };
 const store = new MongoDBStore({
     uri: MONGODB_URI,
