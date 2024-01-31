@@ -17,7 +17,7 @@ require('dotenv').config();
 const MONGODB_URI = process.env.MONGODB_URI;
 const secret_Key = process.env.SECRET_KEY;
 const corsOptions = {
-    origin: ['http://localhost:4200', 'https://kanban-azure-kappa.vercel.app'],
+    origin: ['http://localhost:4200', 'https://kanban-azure-kappa.vercel.app', 'https://kanban-xhtk.onrender.com/'],
     credentials: true,
     exposedHeader: ['Set-Cookie'],
 };
