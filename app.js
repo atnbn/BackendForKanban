@@ -40,10 +40,9 @@ app.use(session({
         secure: true,
         httpOnly: true,
         sameSite: 'none'
-
     }
 }))
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json());
