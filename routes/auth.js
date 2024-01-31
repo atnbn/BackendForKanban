@@ -68,7 +68,7 @@ router.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
-        debugger
+
         if (user && bcrypt.compareSync(password, user.password)) {
             req.session.userId = user._id;
             console.log('login', req.session)

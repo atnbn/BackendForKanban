@@ -8,10 +8,7 @@ const authRoutes = require('./routes/auth')
 const boardRoutes = require('./routes/board')
 const columnRoutes = require('./routes/column')
 const taskRoutes = require('./routes/task')
-
 const app = express();
-
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
@@ -26,7 +23,6 @@ const corsOptions = {
 };
 const store = new MongoDBStore({
     uri: MONGODB_URI,
-
     collection: 'sessions',
 
 });
