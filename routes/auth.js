@@ -47,7 +47,7 @@ router.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
-    if (user && bcrypt.compareSync(password, user.password)) {
+    if (user && bcrypt.hashSync(password, user.password)) {
         req.session.userId = user._id
         req.session.save(err => {
             if (err) {
@@ -82,6 +82,7 @@ router.get('/api/user-data', async (req, res) => {
 });
 
 router.get('/api/check-session', (req, res) => {
+    console.log(req.session)
     if (req.session.userId) {
         console.log('user is authenticated')
         res.json({ isLoggedIn: true, userId: req.session.userId })
