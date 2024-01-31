@@ -23,6 +23,7 @@ const corsOptions = {
 };
 const store = new MongoDBStore({
     uri: MONGODB_URI,
+
     collection: 'sessions',
 
 });
@@ -35,10 +36,10 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24, // e.g., 1 day
         secure: true,
         httpOnly: true,
-        sameSite: 'none'
+        sameSite: 'none',
     }
 }))
-// app.set("trust proxy", 1);
+app.set("trust proxy", 1);
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json());

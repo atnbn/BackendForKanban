@@ -68,16 +68,18 @@ router.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
+        console.log(email)
+        if (user) {
+            console.log('login', password, user.password)
 
+        }
         if (user && bcrypt.compareSync(password, user.password)) {
             req.session.userId = user._id;
-            console.log('login', req.session)
             req.session.save(err => {
                 if (err) {
                     console.error('Session save error:', err);
                     return res.status(500).send('Internal Server Error');
                 }
-                console.log('Session saved with ID:', req.session.userId);
             });
             res.json({ message: 'Logged in successfully' });
         } else {
@@ -110,7 +112,6 @@ router.get('/api/user-data', async (req, res) => {
 router.get('/api/check-session', (req, res) => {
     console.log('auth', req.session)
     if (req.session.userId) {
-        console.log('user is authenticated')
         res.json({ isLoggedIn: true, userId: req.session.userId })
     } else {
         console.log(
