@@ -52,6 +52,9 @@ store.on('error', function (error) {
     console.log(error);
 });
 
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'Server is running' });
+});
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
