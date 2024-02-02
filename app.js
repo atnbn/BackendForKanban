@@ -52,7 +52,7 @@ store.on('error', function (error) {
     console.log(error);
 });
 
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'Server is running' });
 });
 // Start the server
