@@ -34,13 +34,13 @@ app.use(cookieParser())
 app.use(session({
     secret: secret_Key, resave: false, saveUninitialized: false, store: store, cookie: {
         maxAge: 1000 * 60 * 60 * 24, // e.g., 1 day
-        secure: true,
-        httpOnly: true,
-        sameSite: 'none',
+        secure: false,
+        httpOnly: false,
+        // sameSite: 'none',
     }
 }))
 
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', authRoutes);
@@ -55,6 +55,7 @@ store.on('error', function (error) {
 app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'Server is running' });
 });
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

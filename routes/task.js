@@ -4,40 +4,49 @@ const { Task, Board } = require('../models/board.js');
 
 
 
+
 router.post('/api/create-task/:boardId/:columnId', async (req, res) => {
     try {
-        const { boardId, columnId } = req.params
+        const { boardId, columnId } = req.params;
         const taskData = req.body;
+        // Validate taskData
+        if (!taskData.title || !taskData.description) {
+            return res.status(400).json({ error: 'Title and description are required' });
+        }
+
         const board = await Board.findOne({ id: boardId });
         if (!board) {
-            return res.status(404).send('Board not found');
+            return res.status(404).json({ error: 'Board not found' });
         }
-        const column = board.columns.find(col => col.id === columnId)
 
-
-
+        const column = board.columns.find(col => col.id === columnId);
         if (!column) {
-            return res.status(404).send('column not found')
+            return res.status(404).json({ error: 'Column not found' });
         }
+
         const newTask = new Task(taskData);
+
         column.tasks.push(newTask);
 
         await board.save();
-        res.status(201).json({ message: 'Task added successfully', board });
+        res.status(201).json({
+            message: 'Task added successfully', task: {
+                title: newTask.title,
+                description: newTask.description,
+
+            },
+        });
 
     } catch (err) {
-        res.status(500).send('An error occurred while adding the task');
-
+        res.status(500).json({ error: 'An error occurred while adding the task' });
     }
-})
-
+});
 
 router.put('/api/edit-task/:boardId/:columnId/:taskId', async (req, res) => {
     try {
         const { boardId, columnId, taskId } = req.params;
         const { ...updatedTaskData } = req.body;
         const newColumnStatus = req.body.status[0].id
-
         const board = await Board.findOne({ id: boardId });
         if (!board) {
             return res.status(404).send('Board not found');
@@ -49,7 +58,6 @@ router.put('/api/edit-task/:boardId/:columnId/:taskId', async (req, res) => {
         if (!task) {
             return res.status(404).send('Task not found');
         }
-
         Object.assign(task, updatedTaskData);
 
         if (newColumnStatus && newColumnStatus !== columnId) {
