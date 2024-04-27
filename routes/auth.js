@@ -83,7 +83,7 @@ router.get('/api/check-session', (req, res) => {
         console.log('user succees')
     } else {
         console.log('user fail')
-
+        console.log(req.session, req.session.userId)
         res.json({ isLoggedIn: false })
     }
 })
