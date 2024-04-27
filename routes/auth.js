@@ -80,7 +80,9 @@ router.get('/api/user-data', async (req, res) => {
 router.get('/api/check-session', (req, res) => {
     if (req.session.userId) {
         res.json({ isLoggedIn: true, userId: req.session.userId })
+        console.log('user succees')
     } else {
+        console.log('user fail')
 
         res.json({ isLoggedIn: false })
     }
